@@ -14,19 +14,19 @@
     }
 
     function redirectToStore() {
-      var appStoreUrl = getParameterByName('appStoreUrl');
-      var playStoreUrl = getParameterByName('playStoreUrl');
-      var fallbackUrl = getParameterByName('fallbackUrl');
+      var ios = getParameterByName('ios');
+      var android = getParameterByName('android');
+      var fallback = getParameterByName('fallback');
 
-      if (appStoreUrl || playStoreUrl || fallbackUrl) {
+      if (ios || android || fallback) {
         var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
         if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-          window.location.href = appStoreUrl;
+          window.location.href = ios;
         } else if (/android/i.test(userAgent)) {
-          window.location.href = playStoreUrl;
+          window.location.href = android;
         } else {
-          window.location.href = fallbackUrl;
+          window.location.href = fallback;
         }
       } else {
         console.error('Required URL parameters are missing.');
