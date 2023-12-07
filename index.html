@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Redirect to App Store or Play Store</title>
+  <script>
+ function getParameterByName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[[\]]/g, '\\$&');
+      var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+          results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    function redirectToStore() {
+      var appStoreUrl = getParameterByName('appStoreUrl');
+      var playStoreUrl = getParameterByName('playStoreUrl');
+      var fallbackUrl = getParameterByName('fallbackUrl');
+
+      if (appStoreUrl || playStoreUrl || fallbackUrl) {
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+          window.location.href = appStoreUrl;
+        } else if (/android/i.test(userAgent)) {
+          window.location.href = playStoreUrl;
+        } else {
+          window.location.href = fallbackUrl;
+        }
+      } else {
+        console.error('Required URL parameters are missing.');
+      }
+    }
+
+    // Call the function when the page loads
+    window.onload = redirectToStore;
+  </script>
+</head>
+<body>
+ 
+</body>
+</html>
